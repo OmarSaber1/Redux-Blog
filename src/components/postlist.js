@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchPosts } from "../actions";
 import { useEffect } from "react";
+import UserHeader from "./userHeader";
 
 const PostList = (props) => {
   //use Effect Call Api Posts Fetched
@@ -9,12 +10,26 @@ const PostList = (props) => {
   useEffect(() => {
     props.fetchPosts();
   }, []);
-  return <div>Post List</div>;
+
+  return (
+    <div className="container">
+      {props.posts.map((post) => {
+        return (
+          <div key={post.id}>
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
+            <UserHeader userId={post.userId} />
+            <hr />
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
-    state,
+    posts: state.postReducer,
   };
 };
 
