@@ -7,8 +7,7 @@ const UserHeader = (props) => {
     props.fetchUser(props.userId);
   }, []);
 
-  let Author = props.users.find((user) => user.id === props.userId);
-
+  let Author = props.user;
   if (!Author) {
     Author = <div>Loading...</div>;
   }
@@ -16,8 +15,8 @@ const UserHeader = (props) => {
   return <div>{Author.name}</div>;
 };
 
-const mapStateToProps = (state) => {
-  return { users: state.users };
+const mapStateToProps = (state, ownProps) => {
+  return { user: state.users.find((user) => user.id === ownProps.userId) };
 };
 
 export default connect(mapStateToProps, { fetchUser })(UserHeader);
